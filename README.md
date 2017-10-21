@@ -19,17 +19,17 @@ This application is a sample for Elasticsearch client with ASP.Net MVC and Boots
 ## Soruce code clone
 git clone https://github.com/junglestory/elasticsearch-asp.net-mvc.git
 <pre><code>
-    $ cd elasticsearch-asp.net-mvc
+$ cd elasticsearch-asp.net-mvc
 </code></pre>
 
 ## Configuration
 * web.config
 <pre><code>
-    <appSettings>
+"<appSettings>
     <add key="SearchServer" value="http://localhost" /> // your host
     <add key="SearchPort" value="9200" /> // search port
     <add key="ListCount" value="10" /> 
-  </appSettings>
+</appSettings>"
 </code></pre>
 
 ## Run
