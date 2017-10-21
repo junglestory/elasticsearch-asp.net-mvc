@@ -24,13 +24,11 @@ $ cd elasticsearch-asp.net-mvc
 
 ## Configuration
 * web.config
-<pre><code>
 ...<appSettings>
     <add key="SearchServer" value="http://localhost" /> // your host
     <add key="SearchPort" value="9200" /> // search port
     <add key="ListCount" value="10" /> 
 </appSettings>...
-</code></pre>
 
 ## Run
 http://localhost:1279/
