@@ -1,0 +1,119 @@
+﻿@model IEnumerable<elasticsearch_asp.net_mvc.Models.Search>
+@{
+    ViewBag.Title = "Search";
+}
+
+<!-- Page container -->
+<div class="page-container">
+    
+    <!-- Page content -->
+    <div class="page-content">
+        <div class="page-content-inner">
+            <div style="margin-top:25px;"></div>
+
+            <!-- Search line -->
+            <form action="./" class="search-line block" id="searchForm" name="searchForm" role="form">
+                <div class="input-group">
+                    <div class="search-control">
+                        <input type="text" id="query" name="query" value="@ViewBag.query" class="form-control autocomplete ui-autocomplete-input" placeholder="What are you looking for?" autocomplete="off"> 
+                        <input type="hidden" id="page-num" name="pageNum" value="@ViewBag.pageNum" />
+  
+                    </div>
+                    <span class="input-group-btn"> 
+                        <button class="btn btn-primary" type="button" id="search">Search</button>
+                    </span>
+                </div>
+            </form>
+            <!-- /search line --> 
+            <!-- Page tabs -->
+            <div class="tabbable page-tabs">  
+                <h6 class="text-">@ViewBag.totalCount results for Blogs : <strong>"@ViewBag.query"</strong></h6>
+                <div class="row" style="border-bottom: 1px solid #c7dae3; margin-bottom: 15px;">
+                </div>
+                <div class="tab-content">                    
+                    <div class="tab-pane fade active in" id="classic">
+
+                        <!-- Classic search results -->
+                        <ul class="search-results"> 
+
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {                                    
+                                    <li>
+                                        <h6><a href="@Html.DisplayFor(modelItem => item.url)" target="_blank">@Html.DisplayFor(modelItem => item.title)</a> &nbsp;&nbsp;@Html.DisplayFor(modelItem => item.date)</h6> 
+                                        <p>@Html.DisplayFor(modelItem => item.desc)</p>
+                                        @Html.DisplayFor(modelItem => item.author) | @Html.DisplayFor(modelItem => item.category)
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li>
+                                    <p class="text-center">No Search Result</p>
+                                </li>
+                            }
+                             
+                        </ul>
+                        <!-- /classic search results -->
+                        <!-- Pagination -->
+                        <div class="block text-center">
+                            <ul class="pagination">
+                                <li><a href="javascript:void(0);" onclick="goPage(@ViewBag.pageNum-1);">←</a></li>
+
+                                @for (int i = 1; i <= @ViewBag.pageCount; i++)
+                                {
+                                    if (ViewBag.pageNum == i)
+                                    {
+                                        <li class= "active"><a href="javascript:void(0);" onclick="goPage(@i);">@i</a></li>
+                                }
+                                    else
+                                    {
+                                        <li><a href="javascript:void(0);" onclick="goPage(@i);">@i</a></li>
+                                    }
+
+                                }
+
+                                <li><a href="javascript:void(0);" onclick="goPage(@ViewBag.pageNum+1);">→</a></li>
+                            </ul>
+                        </div>
+                        <!-- /pagination -->
+
+                    </div> 
+
+                </div>
+
+            </div>
+            <!-- /page tabs -->
+
+        </div>
+    </div>
+    <!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+<script>
+        $(document).ready(function(){
+            $("#query").keypress(function( event ) {
+                if (event.which == 13) {
+                    $("#page-num").val(1);
+                    search();
+                }
+            });
+
+            $('#search').click(function () {
+                $("#page-num").val(1);
+                search();
+            });    
+        });
+    
+        var search = function() {
+            document.searchForm.submit();
+        }
+
+        var goPage = function(pageNum) {
+            $("#page-num").val(pageNum);
+            search();
+        }
+</script>
